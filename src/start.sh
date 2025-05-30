@@ -9,10 +9,20 @@ cleanup() {
 # Trap exit signals and call the cleanup function
 trap cleanup SIGINT SIGTERM
 
+# Initialize CUDA before starting Ollama
+initialize_cuda() {
+    echo "Running CUDA initialization via Python script..."
+    python -u cuda_init.py
+}
+
+# Run CUDA initialization
+initialize_cuda
+
 # Kill any existing ollama processes
-pgrep ollama | xargs kill
+pgrep ollama | xargs kill || true
 
 # Start the ollama server and log its output
+echo "Starting Ollama server..."
 ollama serve 2>&1 | tee ollama.server.log &
 OLLAMA_PID=$! # Store the process ID (PID) of the background command
 
