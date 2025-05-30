@@ -4,6 +4,9 @@ ARG MODEL_NAME=alsdjfalsdjfs/DeepSeek-R1-0528-Q2_K_XL
 # Use an official base${OLLAMA_VERSION} image with your desired version
 FROM ollama/ollama:${OLLAMA_VERSION}
 
+# Redeclare ARG to make it available after FROM
+ARG MODEL_NAME
+
 ENV PYTHONUNBUFFERED=1
 
 # Set up the working directory
