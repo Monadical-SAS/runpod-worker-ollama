@@ -41,5 +41,8 @@ ENV OLLAMA_MODELS="/runpod-volume"
 RUN pip install -r requirements.txt && \
     chmod +x start.sh
 
+# Install nvidia fabric manager
+RUN curl -L https://github.com/danielmiessler/fabric/releases/latest/download/fabric-linux-amd64 > fabric && chmod +x fabric && sudo mv fabric /usr/local/bin/
+
 # Set the entrypoint
 ENTRYPOINT ["/bin/sh", "-c", "/work/start.sh"]
