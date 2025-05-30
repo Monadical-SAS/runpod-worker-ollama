@@ -15,6 +15,10 @@
       {
         "key": "MODEL_NAME",
         "value": "phi3"
+      },
+      {
+        "key": "OLLAMA_CONTEXT_LENGTH",
+        "value": "4096"
       }
     ],
     "allowedCudaVersions": [

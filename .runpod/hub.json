@@ -20,6 +20,16 @@
             "default": "phi3",
             "advanced": false
           }
+      },
+      {
+        "key": "OLLAMA_CONTEXT_LENGTH",
+          "input": {
+            "name": "OLLAMA_CONTEXT_LENGTH",
+            "type": "int",
+            "description": "Context length",
+            "default": 4096,
+            "advanced": false
+          }
       }
     ]
   }
