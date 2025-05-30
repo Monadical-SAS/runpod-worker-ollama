@@ -45,9 +45,21 @@ ENV OLLAMA_MODELS="/runpod-volume"
 RUN pip install -r requirements.txt && \
     chmod +x start.sh
 
-# Pull and embed the specified model
-# This step downloads the model during image build time
-RUN ollama pull ${MODEL_NAME}
+# Create a script to pull the model
+RUN echo '#!/bin/bash\n\
+ollama serve > /dev/null 2>&1 &\n\
+SERVER_PID=$!\n\
+echo "Waiting for Ollama server to start..."\n\
+sleep 10\n\
+echo "Pulling model: ${MODEL_NAME}"\n\
+ollama pull ${MODEL_NAME}\n\
+kill $SERVER_PID\n\
+wait $SERVER_PID || true\n\
+echo "Model pull completed"\n\
+' > /pull_model.sh && chmod +x /pull_model.sh
+
+# Run the script to pull and embed the model
+RUN /pull_model.sh
 
 # Set the entrypoint
 ENTRYPOINT ["/bin/sh", "-c", "/work/start.sh"]
